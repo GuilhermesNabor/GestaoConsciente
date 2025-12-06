@@ -1,0 +1,15 @@
+/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/android/app/.cxx/Debug/2lqs5q6m/armeabi-v7a/CMakeFiles/appmodules.dir
+/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/android/app/.cxx/Debug/2lqs5q6m/armeabi-v7a/CMakeFiles/edit_cache.dir
+/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/android/app/.cxx/Debug/2lqs5q6m/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/android/app/.cxx/Debug/2lqs5q6m/armeabi-v7a/rnasyncstorage_autolinked_build/CMakeFiles/react_codegen_rnasyncstorage.dir
+/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/android/app/.cxx/Debug/2lqs5q6m/armeabi-v7a/rnasyncstorage_autolinked_build/CMakeFiles/edit_cache.dir
+/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/android/app/.cxx/Debug/2lqs5q6m/armeabi-v7a/rnasyncstorage_autolinked_build/CMakeFiles/rebuild_cache.dir
+/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/android/app/.cxx/Debug/2lqs5q6m/armeabi-v7a/safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir
+/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/android/app/.cxx/Debug/2lqs5q6m/armeabi-v7a/safeareacontext_autolinked_build/CMakeFiles/edit_cache.dir
+/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/android/app/.cxx/Debug/2lqs5q6m/armeabi-v7a/safeareacontext_autolinked_build/CMakeFiles/rebuild_cache.dir
+/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/android/app/.cxx/Debug/2lqs5q6m/armeabi-v7a/rnsvg_autolinked_build/CMakeFiles/react_codegen_rnsvg.dir
+/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/android/app/.cxx/Debug/2lqs5q6m/armeabi-v7a/rnsvg_autolinked_build/CMakeFiles/edit_cache.dir
+/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/android/app/.cxx/Debug/2lqs5q6m/armeabi-v7a/rnsvg_autolinked_build/CMakeFiles/rebuild_cache.dir
+/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/android/app/.cxx/Debug/2lqs5q6m/armeabi-v7a/rnworklets_autolinked_build/CMakeFiles/react_codegen_rnworklets.dir
+/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/android/app/.cxx/Debug/2lqs5q6m/armeabi-v7a/rnworklets_autolinked_build/CMakeFiles/edit_cache.dir
+/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/android/app/.cxx/Debug/2lqs5q6m/armeabi-v7a/rnworklets_autolinked_build/CMakeFiles/rebuild_cache.dir

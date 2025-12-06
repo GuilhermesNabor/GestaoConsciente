@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "safeareacontext_autolinked_build",
+		"source" : "/home/nabor/\u00c1rea de trabalho/gest\u00e3oConsciente/GestaoConsciente/node_modules/react-native-safe-area-context/android/src/main/jni"
+	}
+}

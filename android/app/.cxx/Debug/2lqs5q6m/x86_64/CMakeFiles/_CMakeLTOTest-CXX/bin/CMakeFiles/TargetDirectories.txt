@@ -1,0 +1,4 @@
+/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/android/app/.cxx/Debug/2lqs5q6m/x86_64/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/foo.dir
+/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/android/app/.cxx/Debug/2lqs5q6m/x86_64/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/boo.dir
+/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/android/app/.cxx/Debug/2lqs5q6m/x86_64/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/edit_cache.dir
+/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/android/app/.cxx/Debug/2lqs5q6m/x86_64/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/rebuild_cache.dir
