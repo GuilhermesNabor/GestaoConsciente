@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
+import Feather from 'react-native-vector-icons/Feather';
 import AddExpenseModal from '../components/AddExpenseModal';
 import DonutChart from '../components/DonutChart';
 import Ticker from '../components/Ticker';
@@ -9,6 +10,7 @@ import Ticker from '../components/Ticker';
 const MainScreen = ({ name, salary }) => {
   const [expenses, setExpenses] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const [editingExpense, setEditingExpense] = useState(null);
   const [currentSalary, setCurrentSalary] = useState(salary);
   const isFocused = useIsFocused();
 
@@ -51,13 +53,13 @@ const MainScreen = ({ name, salary }) => {
     {
       key: 1,
       amount: necessaryExpenses,
-      color: '#2E8B57',
+      color: '#4CAF50',
       total: totalExpenses,
     },
     {
       key: 2,
       amount: unnecessaryExpenses,
-      color: '#A9A9A9',
+      color: '#E0E0E0',
       total: totalExpenses,
     }
   ];
@@ -69,6 +71,34 @@ const MainScreen = ({ name, salary }) => {
       await AsyncStorage.setItem('expenses', JSON.stringify(newExpenses));
     } catch (error) {
       console.error('Error saving expense:', error);
+    }
+  };
+
+  const handleEditExpense = (expense) => {
+    setEditingExpense(expense);
+    setModalVisible(true);
+  };
+
+  const handleDeleteExpense = async (id) => {
+    try {
+      const newExpenses = expenses.filter(expense => expense.id !== id);
+      setExpenses(newExpenses);
+      await AsyncStorage.setItem('expenses', JSON.stringify(newExpenses));
+    } catch (error) {
+      console.error('Error deleting expense:', error);
+    }
+  };
+
+  const onEditExpense = async (editedExpense) => {
+    try {
+      const newExpenses = expenses.map(expense =>
+        expense.id === editedExpense.id ? editedExpense : expense
+      );
+      setExpenses(newExpenses);
+      await AsyncStorage.setItem('expenses', JSON.stringify(newExpenses));
+      setEditingExpense(null);
+    } catch (error) {
+      console.error('Error editing expense:', error);
     }
   };
 
@@ -86,8 +116,30 @@ const MainScreen = ({ name, salary }) => {
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <View style={styles.expenseItem}>
-              <Text style={styles.expenseDescription}>{item.description}</Text>
-              <Text style={styles.expenseAmount}>R$ {item.amount.toFixed(2)}</Text>
+              <View>
+                <Text style={styles.expenseDescription}>{item.description}</Text>
+                <Text style={styles.expenseAmount}>R$ {item.amount.toFixed(2)}</Text>
+              </View>
+              <View style={styles.expenseActions}>
+                <TouchableOpacity onPress={() => handleEditExpense(item)}>
+                  <Feather name="edit" size={20} color="#2196F3" />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() =>
+                  Alert.alert(
+                    "Excluir Despesa",
+                    "Tem certeza que deseja excluir esta despesa?",
+                    [
+                      {
+                        text: "Cancelar",
+                        style: "cancel"
+                      },
+                      { text: "Excluir", onPress: () => handleDeleteExpense(item.id) }
+                    ]
+                  )
+                }>
+                  <Feather name="trash-2" size={20} color="#F44336" />
+                </TouchableOpacity>
+              </View>
             </View>
           )}
         />
@@ -95,23 +147,31 @@ const MainScreen = ({ name, salary }) => {
           <DonutChart data={chartData} totalExpenses={totalExpenses} />
           <View style={styles.legendContainer}>
             <View style={styles.legendItem}>
-              <View style={[styles.legendColor, { backgroundColor: '#2E8B57' }]} />
+              <View style={[styles.legendColor, { backgroundColor: '#4CAF50' }]} />
               <Text style={styles.legendText}>Necessário</Text>
             </View>
             <View style={styles.legendItem}>
-              <View style={[styles.legendColor, { backgroundColor: '#A9A9A9' }]} />
+              <View style={[styles.legendColor, { backgroundColor: '#E0E0E0' }]} />
               <Text style={styles.legendText}>Não Necessário</Text>
             </View>
           </View>
         </View>
       </View>
-      <TouchableOpacity style={styles.addButton} onPress={() => setModalVisible(true)}>
-        <Text style={styles.addButtonText}>+</Text>
+      <TouchableOpacity style={styles.addButton} onPress={() => {
+        setEditingExpense(null);
+        setModalVisible(true);
+      }}>
+        <Feather name="plus" size={30} color="#FFFFFF" />
       </TouchableOpacity>
       <AddExpenseModal
         visible={modalVisible}
-        onClose={() => setModalVisible(false)}
+        onClose={() => {
+          setModalVisible(false);
+          setEditingExpense(null);
+        }}
         onAddExpense={handleAddExpense}
+        onEditExpense={onEditExpense}
+        editingExpense={editingExpense}
       />
     </View>
   );
@@ -120,52 +180,61 @@ const MainScreen = ({ name, salary }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F0FFF0',
+    backgroundColor: '#F5F5F5',
   },
   summaryContainer: {
-    padding: 20,
-    backgroundColor: '#2E8B57',
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
+    padding: 30,
+    backgroundColor: '#4CAF50',
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40,
     alignItems: 'center',
   },
   title: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: 'bold',
     color: '#FFFFFF',
     textAlign: 'center',
   },
   subtitle: {
-    fontSize: 18,
+    fontSize: 20,
     color: '#FFFFFF',
     textAlign: 'center',
+    marginTop: 5,
   },
   expensesContainer: {
     flex: 1,
     padding: 20,
   },
   expensesTitle: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: 'bold',
-    color: '#2E8B57',
-    marginBottom: 10,
+    color: '#333333',
+    marginBottom: 15,
   },
   expenseItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     padding: 15,
     backgroundColor: '#FFFFFF',
-    borderRadius: 10,
+    borderRadius: 15,
     marginBottom: 10,
+    elevation: 2,
   },
   expenseDescription: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#333333',
+    fontWeight: '500',
   },
   expenseAmount: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#2E8B57',
+    color: '#4CAF50',
+  },
+  expenseActions: {
+    flexDirection: 'row',
+    width: 60,
+    justifyContent: 'space-between',
   },
   chartContainer: {
     alignItems: 'center',
@@ -175,20 +244,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginTop: 10,
+    width: '100%',
   },
   legendItem: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   legendColor: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    marginRight: 5,
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    marginRight: 8,
   },
   legendText: {
-    fontSize: 14,
-    color: '#333333',
+    fontSize: 16,
+    color: '#666666',
   },
   addButton: {
     position: 'absolute',
@@ -197,14 +267,10 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: '#2E8B57',
+    backgroundColor: '#4CAF50',
     justifyContent: 'center',
     alignItems: 'center',
-    elevation: 5,
-  },
-  addButtonText: {
-    fontSize: 30,
-    color: '#FFFFFF',
+    elevation: 8,
   },
 });
 

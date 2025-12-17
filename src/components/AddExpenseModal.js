@@ -1,22 +1,39 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal, Switch } from 'react-native';
 
-const AddExpenseModal = ({ visible, onClose, onAddExpense }) => {
+const AddExpenseModal = ({ visible, onClose, onAddExpense, onEditExpense, editingExpense }) => {
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
   const [isNecessary, setIsNecessary] = useState(false);
 
-  const handleAddExpense = () => {
-    if (description && amount) {
-      onAddExpense({
-        description,
-        amount: parseFloat(amount),
-        isNecessary,
-      });
+  useEffect(() => {
+    if (editingExpense) {
+      setDescription(editingExpense.description);
+      setAmount(editingExpense.amount.toString());
+      setIsNecessary(editingExpense.isNecessary);
+    } else {
       setDescription('');
       setAmount('');
       setIsNecessary(false);
+    }
+  }, [editingExpense]);
+
+  const handleSave = () => {
+    if (description && amount) {
+      const expenseData = {
+        id: editingExpense ? editingExpense.id : Math.random().toString(),
+        description,
+        amount: parseFloat(amount),
+        isNecessary,
+      };
+
+      if (editingExpense) {
+        onEditExpense(expenseData);
+      } else {
+        onAddExpense(expenseData);
+      }
+
       onClose();
     }
   };
@@ -30,18 +47,18 @@ const AddExpenseModal = ({ visible, onClose, onAddExpense }) => {
     >
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
-          <Text style={styles.modalTitle}>Adicionar Despesa</Text>
+          <Text style={styles.modalTitle}>{editingExpense ? 'Editar Despesa' : 'Adicionar Despesa'}</Text>
           <TextInput
             style={styles.input}
             placeholder="Descrição"
-            placeholderTextColor="#2E8B57"
+            placeholderTextColor="#4CAF50"
             value={description}
             onChangeText={setDescription}
           />
           <TextInput
             style={styles.input}
             placeholder="Valor"
-            placeholderTextColor="#2E8B57"
+            placeholderTextColor="#4CAF50"
             value={amount}
             onChangeText={setAmount}
             keyboardType="numeric"
@@ -56,8 +73,8 @@ const AddExpenseModal = ({ visible, onClose, onAddExpense }) => {
               value={isNecessary}
             />
           </View>
-          <TouchableOpacity style={styles.addButton} onPress={handleAddExpense}>
-            <Text style={styles.addButtonText}>Adicionar</Text>
+          <TouchableOpacity style={styles.addButton} onPress={handleSave}>
+            <Text style={styles.addButtonText}>{editingExpense ? 'Salvar' : 'Adicionar'}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.closeButton} onPress={onClose}>
             <Text style={styles.closeButtonText}>Fechar</Text>
@@ -77,7 +94,7 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     width: '80%',
-    backgroundColor: '#F0FFF0',
+    backgroundColor: '#F5F5F5',
     borderRadius: 20,
     padding: 20,
     alignItems: 'center',
@@ -85,14 +102,14 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: '#2E8B57',
+    color: '#4CAF50',
     marginBottom: 20,
   },
   input: {
     width: '100%',
     height: 50,
     backgroundColor: '#FFFFFF',
-    borderColor: '#2E8B57',
+    borderColor: '#4CAF50',
     borderWidth: 1,
     borderRadius: 10,
     marginBottom: 20,
@@ -108,12 +125,12 @@ const styles = StyleSheet.create({
   },
   switchLabel: {
     fontSize: 16,
-    color: '#2E8B57',
+    color: '#4CAF50',
   },
   addButton: {
     width: '100%',
     height: 50,
-    backgroundColor: '#2E8B57',
+    backgroundColor: '#4CAF50',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
@@ -131,7 +148,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   closeButtonText: {
-    color: '#2E8B57',
+    color: '#4CAF50',
     fontSize: 16,
   },
 });
