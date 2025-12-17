@@ -5,22 +5,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AddBalanceScreen = ({ navigation }) => {
   const [amount, setAmount] = useState('');
-  const [date, setDate] = useState('');
 
   const handleAddBalance = async () => {
-    if (amount && date) {
+    if (amount) {
       try {
-        const newBalance = {
-          amount: parseFloat(amount),
-          date,
-        };
-        const existingBalances = await AsyncStorage.getItem('balances');
-        const balances = existingBalances ? JSON.parse(existingBalances) : [];
-        balances.push(newBalance);
-        await AsyncStorage.setItem('balances', JSON.stringify(balances));
+        const currentSalary = await AsyncStorage.getItem('salary');
+        const newAmount = parseFloat(amount);
+        const updatedSalary = (currentSalary ? parseFloat(currentSalary) : 0) + newAmount;
+
+        await AsyncStorage.setItem('salary', updatedSalary.toString());
         Alert.alert('Sucesso', 'Saldo adicionado com sucesso!');
         setAmount('');
-        setDate('');
         navigation.goBack();
       } catch (error) {
         console.error('Error saving balance:', error);
@@ -41,13 +36,6 @@ const AddBalanceScreen = ({ navigation }) => {
         value={amount}
         onChangeText={setAmount}
         keyboardType="numeric"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Data (DD/MM/AAAA)"
-        placeholderTextColor="#2E8B57"
-        value={date}
-        onChangeText={setDate}
       />
       <TouchableOpacity style={styles.button} onPress={handleAddBalance}>
         <Text style={styles.buttonText}>Adicionar</Text>

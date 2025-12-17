@@ -2,10 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, StatusBar } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import WelcomeScreen from './src/screens/WelcomeScreen';
-import MainScreen from './src/screens/MainScreen';
+import Navigation from './src/navigation/Navigation';
 
 const App = () => {
   return (
@@ -19,7 +19,6 @@ const AppContent = () => {
   const [isFirstLaunch, setIsFirstLaunch] = useState(null);
   const [name, setName] = useState('');
   const [salary, setSalary] = useState('');
-  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     const checkFirstLaunch = async () => {
@@ -60,12 +59,12 @@ const AppContent = () => {
   }
 
   return (
-    <View style={{ flex: 1, paddingTop: insets.top, paddingLeft: insets.left, paddingRight: insets.right, paddingBottom: insets.bottom, backgroundColor: '#F0FFF0' }}>
+    <View style={{ flex: 1, backgroundColor: '#F0FFF0' }}>
       <StatusBar barStyle="dark-content" backgroundColor="#F0FFF0" />
       {isFirstLaunch ? (
         <WelcomeScreen onComplete={handleWelcomeComplete} />
       ) : (
-        <MainScreen name={name} salary={salary} />
+        <Navigation name={name} salary={salary} />
       )}
     </View>
   );

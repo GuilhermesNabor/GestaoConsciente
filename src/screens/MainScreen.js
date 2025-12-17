@@ -1,19 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from '@react-navigation/native';
 import AddExpenseModal from '../components/AddExpenseModal';
 import DonutChart from '../components/DonutChart';
 import Ticker from '../components/Ticker';
 
 const MainScreen = ({ name, salary }) => {
-  const [expenses, setExpenses] = useState([
-    { id: '1', description: 'Almoço', amount: 25.00, isNecessary: true },
-    { id: '2', description: 'Transporte', amount: 10.00, isNecessary: true },
-    { id: '3', description: 'Café', amount: 5.00, isNecessary: false },
-  ]);
+  const [expenses, setExpenses] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const [currentSalary, setCurrentSalary] = useState(salary);
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    const getExpenses = async () => {
+      try {
+        const savedExpenses = await AsyncStorage.getItem('expenses');
+        if (savedExpenses) {
+          setExpenses(JSON.parse(savedExpenses));
+        }
+      } catch (error) {
+        console.error('Error getting expenses:', error);
+      }
+    };
+
+    const getSalary = async () => {
+      try {
+        const savedSalary = await AsyncStorage.getItem('salary');
+        if (savedSalary) {
+          setCurrentSalary(parseFloat(savedSalary));
+        }
+      } catch (error) {
+        console.error('Error getting salary:', error);
+      }
+    };
+
+    if (isFocused) {
+      getExpenses();
+      getSalary();
+    }
+  }, [isFocused]);
 
   const totalExpenses = expenses.reduce((total, expense) => total + expense.amount, 0);
-  const remainingBalance = salary - totalExpenses;
+  const remainingBalance = currentSalary - totalExpenses;
 
   const necessaryExpenses = expenses.filter(expense => expense.isNecessary).reduce((total, expense) => total + expense.amount, 0);
   const unnecessaryExpenses = totalExpenses - necessaryExpenses;
@@ -33,8 +62,14 @@ const MainScreen = ({ name, salary }) => {
     }
   ];
 
-  const handleAddExpense = (expense) => {
-    setExpenses([...expenses, { ...expense, id: Math.random().toString() }]);
+  const handleAddExpense = async (expense) => {
+    try {
+      const newExpenses = [...expenses, { ...expense, id: Math.random().toString() }];
+      setExpenses(newExpenses);
+      await AsyncStorage.setItem('expenses', JSON.stringify(newExpenses));
+    } catch (error) {
+      console.error('Error saving expense:', error);
+    }
   };
 
   return (
