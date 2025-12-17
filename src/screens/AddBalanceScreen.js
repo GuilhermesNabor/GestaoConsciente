@@ -16,7 +16,7 @@ const AddBalanceScreen = ({ navigation }) => {
         await AsyncStorage.setItem('salary', updatedSalary.toString());
         Alert.alert('Sucesso', 'Saldo adicionado com sucesso!');
         setAmount('');
-        navigation.goBack();
+        navigation.navigate('Início');
       } catch (error) {
         console.error('Error saving balance:', error);
         Alert.alert('Erro', 'Ocorreu um erro ao salvar o saldo.');
@@ -28,18 +28,22 @@ const AddBalanceScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Adicionar Saldo</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Valor"
-        placeholderTextColor="#2E8B57"
-        value={amount}
-        onChangeText={setAmount}
-        keyboardType="numeric"
-      />
-      <TouchableOpacity style={styles.button} onPress={handleAddBalance}>
-        <Text style={styles.buttonText}>Adicionar</Text>
-      </TouchableOpacity>
+      <View style={styles.header}>
+        <Text style={styles.title}>Adicionar Saldo</Text>
+      </View>
+      <View style={styles.form}>
+        <TextInput
+          style={styles.input}
+          placeholder="Valor"
+          placeholderTextColor="#4CAF50"
+          value={amount}
+          onChangeText={setAmount}
+          keyboardType="numeric"
+        />
+        <TouchableOpacity style={styles.button} onPress={handleAddBalance}>
+          <Text style={styles.buttonText}>Adicionar</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -47,21 +51,30 @@ const AddBalanceScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F0FFF0',
-    padding: 20,
+    backgroundColor: '#F5F5F5',
+  },
+  header: {
+    backgroundColor: '#4CAF50',
+    padding: 40,
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40,
+    alignItems: 'center',
   },
   title: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: 'bold',
-    color: '#2E8B57',
-    marginBottom: 20,
+    color: '#FFFFFF',
     textAlign: 'center',
+  },
+  form: {
+    padding: 20,
+    marginTop: 20,
   },
   input: {
     width: '100%',
     height: 50,
     backgroundColor: '#FFFFFF',
-    borderColor: '#2E8B57',
+    borderColor: '#4CAF50',
     borderWidth: 1,
     borderRadius: 10,
     marginBottom: 20,
@@ -71,7 +84,7 @@ const styles = StyleSheet.create({
   button: {
     width: '100%',
     height: 50,
-    backgroundColor: '#2E8B57',
+    backgroundColor: '#4CAF50',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
