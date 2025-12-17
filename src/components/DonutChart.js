@@ -1,6 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import Svg, { G, Circle } from 'react-native-svg';
+import * as Animatable from 'react-native-animatable';
 
 const DonutChart = ({ data, totalExpenses }) => {
   const radius = 70;
@@ -15,7 +16,7 @@ const DonutChart = ({ data, totalExpenses }) => {
     circleCircumference - (circleCircumference * unnecessaryPercentage) / 100;
 
   return (
-    <View>
+    <Animatable.View animation="fadeIn" duration={1500}>
       <Svg height="160" width="160" viewBox="0 0 180 180">
         <G rotation={-90} originX="90" originY="90">
           <Circle
@@ -39,7 +40,7 @@ const DonutChart = ({ data, totalExpenses }) => {
           />
         </G>
       </Svg>
-    </View>
+    </Animatable.View>
   );
 };
 
