@@ -1,11 +1,13 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, FlatList, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Dimensions, ActivityIndicator } from 'react-native';
 
 const { width: screenWidth } = Dimensions.get('window');
 
 const Ticker = () => {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const flatListRef = useRef(null);
 
   useEffect(() => {
@@ -20,7 +22,10 @@ const Ticker = () => {
         ];
         setData(prices);
       } catch (error) {
+        setError('Error fetching prices');
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -37,6 +42,22 @@ const Ticker = () => {
 
     return () => clearInterval(interval);
   }, [data]);
+
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="#2E8B57" />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.errorText}>{error}</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -65,6 +86,8 @@ const styles = StyleSheet.create({
   container: {
     height: 100,
     marginTop: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   flatList: {
     width: screenWidth - 40,
@@ -85,6 +108,10 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 14,
     color: '#333333',
+  },
+  errorText: {
+    fontSize: 16,
+    color: 'red',
   },
 });
 
