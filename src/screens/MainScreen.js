@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert, Animated } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
 import Feather from 'react-native-vector-icons/Feather';
@@ -13,6 +13,9 @@ const MainScreen = ({ name, salary }) => {
   const [editingExpense, setEditingExpense] = useState(null);
   const [currentSalary, setCurrentSalary] = useState(salary);
   const isFocused = useIsFocused();
+  
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const slideAnim = useRef(new Animated.Value(50)).current;
 
   useEffect(() => {
     const getExpenses = async () => {
@@ -40,8 +43,25 @@ const MainScreen = ({ name, salary }) => {
     if (isFocused) {
       getExpenses();
       getSalary();
+      
+      // Reset animations
+      fadeAnim.setValue(0);
+      slideAnim.setValue(50);
+      
+      Animated.parallel([
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 800,
+          useNativeDriver: true,
+        }),
+        Animated.timing(slideAnim, {
+          toValue: 0,
+          duration: 800,
+          useNativeDriver: true,
+        }),
+      ]).start();
     }
-  }, [isFocused]);
+  }, [isFocused, fadeAnim, slideAnim]);
 
   const totalExpenses = expenses.reduce((total, expense) => total + expense.amount, 0);
   const remainingBalance = currentSalary - totalExpenses;
@@ -104,59 +124,61 @@ const MainScreen = ({ name, salary }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.summaryContainer}>
-        <Text style={styles.title}>Olá, {name}!</Text>
-        <Text style={styles.subtitle}>Seu saldo restante é de R$ {remainingBalance.toFixed(2)}</Text>
-        <Ticker />
-      </View>
-      <View style={styles.expensesContainer}>
-        <Text style={styles.expensesTitle}>Despesas</Text>
-        <FlatList
-          data={expenses}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <View style={styles.expenseItem}>
-              <View>
-                <Text style={styles.expenseDescription}>{item.description}</Text>
-                <Text style={styles.expenseAmount}>R$ {item.amount.toFixed(2)}</Text>
+      <Animated.View style={[styles.contentContainer, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
+        <View style={styles.summaryContainer}>
+          <Text style={styles.title}>Olá, {name}!</Text>
+          <Text style={styles.subtitle}>Seu saldo restante é de R$ {remainingBalance.toFixed(2)}</Text>
+          <Ticker />
+        </View>
+        <View style={styles.expensesContainer}>
+          <Text style={styles.expensesTitle}>Despesas</Text>
+          <FlatList
+            data={expenses}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <View style={styles.expenseItem}>
+                <View>
+                  <Text style={styles.expenseDescription}>{item.description}</Text>
+                  <Text style={styles.expenseAmount}>R$ {item.amount.toFixed(2)}</Text>
+                </View>
+                <View style={styles.expenseActions}>
+                  <TouchableOpacity onPress={() => handleEditExpense(item)}>
+                    <Feather name="edit" size={20} color="#2196F3" />
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() =>
+                    Alert.alert(
+                      "Excluir Despesa",
+                      "Tem certeza que deseja excluir esta despesa?",
+                      [
+                        {
+                          text: "Cancelar",
+                          style: "cancel"
+                        },
+                        { text: "Excluir", onPress: () => handleDeleteExpense(item.id) }
+                      ]
+                    )
+                  }>
+                    <Feather name="trash-2" size={20} color="#F44336" />
+                  </TouchableOpacity>
+                </View>
               </View>
-              <View style={styles.expenseActions}>
-                <TouchableOpacity onPress={() => handleEditExpense(item)}>
-                  <Feather name="edit" size={20} color="#2196F3" />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() =>
-                  Alert.alert(
-                    "Excluir Despesa",
-                    "Tem certeza que deseja excluir esta despesa?",
-                    [
-                      {
-                        text: "Cancelar",
-                        style: "cancel"
-                      },
-                      { text: "Excluir", onPress: () => handleDeleteExpense(item.id) }
-                    ]
-                  )
-                }>
-                  <Feather name="trash-2" size={20} color="#F44336" />
-                </TouchableOpacity>
+            )}
+          />
+          <View style={styles.chartContainer}>
+            <DonutChart data={chartData} totalExpenses={totalExpenses} />
+            <View style={styles.legendContainer}>
+              <View style={styles.legendItem}>
+                <View style={[styles.legendColor, { backgroundColor: '#4CAF50' }]} />
+                <Text style={styles.legendText}>Necessário</Text>
               </View>
-            </View>
-          )}
-        />
-        <View style={styles.chartContainer}>
-          <DonutChart data={chartData} totalExpenses={totalExpenses} />
-          <View style={styles.legendContainer}>
-            <View style={styles.legendItem}>
-              <View style={[styles.legendColor, { backgroundColor: '#4CAF50' }]} />
-              <Text style={styles.legendText}>Necessário</Text>
-            </View>
-            <View style={styles.legendItem}>
-              <View style={[styles.legendColor, { backgroundColor: '#E0E0E0' }]} />
-              <Text style={styles.legendText}>Não Necessário</Text>
+              <View style={styles.legendItem}>
+                <View style={[styles.legendColor, { backgroundColor: '#E0E0E0' }]} />
+                <Text style={styles.legendText}>Não Necessário</Text>
+              </View>
             </View>
           </View>
         </View>
-      </View>
+      </Animated.View>
       <TouchableOpacity style={styles.addButton} onPress={() => {
         setEditingExpense(null);
         setModalVisible(true);
@@ -181,6 +203,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5F5F5',
+  },
+  contentContainer: {
+    flex: 1,
   },
   summaryContainer: {
     padding: 30,

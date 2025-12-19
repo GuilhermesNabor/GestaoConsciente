@@ -1,43 +1,61 @@
 
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import * as Animatable from 'react-native-animatable';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Animated } from 'react-native';
 
 const WelcomeScreen = ({ onComplete }) => {
   const [name, setName] = useState('');
   const [salary, setSalary] = useState('');
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const slideAnim = useRef(new Animated.Value(50)).current;
+
+  useEffect(() => {
+    Animated.parallel([
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 1000,
+        useNativeDriver: true,
+      }),
+      Animated.timing(slideAnim, {
+        toValue: 0,
+        duration: 1000,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, [fadeAnim, slideAnim]);
 
   return (
-    <Animatable.View animation="fadeIn" duration={1500} style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Bem-vindo ao Gestão Consciente!</Text>
-        <Text style={styles.subtitle}>Para começar, precisamos de algumas informações:</Text>
-      </View>
-      <View style={styles.form}>
-        <TextInput
-          style={styles.input}
-          placeholder="Qual o seu nome?"
-          placeholderTextColor="#4CAF50"
-          value={name}
-          onChangeText={setName}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Qual o seu salário?"
-          placeholderTextColor="#4CAF50"
-          value={salary}
-          onChangeText={setSalary}
-          keyboardType="numeric"
-        />
-        <TouchableOpacity
-          style={[styles.button, (!name || !salary) && styles.disabledButton]}
-          onPress={() => onComplete(name, salary)}
-          disabled={!name || !salary}
-        >
-          <Text style={styles.buttonText}>Começar</Text>
-        </TouchableOpacity>
-      </View>
-    </Animatable.View>
+    <View style={styles.container}>
+      <Animated.View style={[styles.contentContainer, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
+        <View style={styles.header}>
+          <Text style={styles.title}>Bem-vindo ao Gestão Consciente!</Text>
+          <Text style={styles.subtitle}>Para começar, precisamos de algumas informações:</Text>
+        </View>
+        <View style={styles.form}>
+          <TextInput
+            style={styles.input}
+            placeholder="Qual o seu nome?"
+            placeholderTextColor="#4CAF50"
+            value={name}
+            onChangeText={setName}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Qual o seu salário?"
+            placeholderTextColor="#4CAF50"
+            value={salary}
+            onChangeText={setSalary}
+            keyboardType="numeric"
+          />
+          <TouchableOpacity
+            style={[styles.button, (!name || !salary) && styles.disabledButton]}
+            onPress={() => onComplete(name, salary)}
+            disabled={!name || !salary}
+          >
+            <Text style={styles.buttonText}>Começar</Text>
+          </TouchableOpacity>
+        </View>
+      </Animated.View>
+    </View>
   );
 };
 
@@ -45,6 +63,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5F5F5',
+  },
+  contentContainer: {
+    flex: 1,
   },
   header: {
     backgroundColor: '#4CAF50',

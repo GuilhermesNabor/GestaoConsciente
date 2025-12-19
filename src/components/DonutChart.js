@@ -1,22 +1,36 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { View, Animated } from 'react-native';
 import Svg, { G, Circle } from 'react-native-svg';
-import * as Animatable from 'react-native-animatable';
+
+const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 const DonutChart = ({ data, totalExpenses }) => {
   const radius = 70;
   const circleCircumference = 2 * Math.PI * radius;
 
-  const necessaryPercentage = (data[0].amount / totalExpenses) * 100;
-  const unnecessaryPercentage = (data[1].amount / totalExpenses) * 100;
-
+  const necessaryPercentage = totalExpenses > 0 ? (data[0].amount / totalExpenses) * 100 : 0;
+  
   const necessaryStrokeDashoffset =
     circleCircumference - (circleCircumference * necessaryPercentage) / 100;
-  const unnecessaryStrokeDashoffset =
-    circleCircumference - (circleCircumference * unnecessaryPercentage) / 100;
+
+  const animatedValue = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(animatedValue, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true, // true is supported for some SVG props in newer RN versions, but safer false for strokeDashoffset often. Let's try true first as direct manipulation might work with wrappers, or false if it fails. Actually, let's use false for maximum compatibility with SVG props unless using Reanimated.
+      useNativeDriver: false, 
+    }).start();
+  }, [necessaryPercentage]);
+
+  const strokeDashoffset = animatedValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [circleCircumference, necessaryStrokeDashoffset],
+  });
 
   return (
-    <Animatable.View animation="fadeIn" duration={1500}>
+    <View>
       <Svg height="160" width="160" viewBox="0 0 180 180">
         <G rotation={-90} originX="90" originY="90">
           <Circle
@@ -27,7 +41,7 @@ const DonutChart = ({ data, totalExpenses }) => {
             fill="transparent"
             strokeWidth="40"
           />
-          <Circle
+          <AnimatedCircle
             cx="50%"
             cy="50%"
             r={radius}
@@ -35,12 +49,12 @@ const DonutChart = ({ data, totalExpenses }) => {
             fill="transparent"
             strokeWidth="40"
             strokeDasharray={circleCircumference}
-            strokeDashoffset={necessaryStrokeDashoffset}
+            strokeDashoffset={strokeDashoffset}
             strokeLinecap="round"
           />
         </G>
       </Svg>
-    </Animatable.View>
+    </View>
   );
 };
 
