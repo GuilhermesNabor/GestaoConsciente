@@ -7,6 +7,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import MainScreen from '../screens/MainScreen';
 import AddBalanceScreen from '../screens/AddBalanceScreen';
 import GoalsScreen from '../screens/GoalsScreen';
+import SalaryScreen from '../screens/SalaryScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -24,6 +25,8 @@ const Navigation = ({ name, salary }) => {
               iconName = 'plus-circle';
             } else if (route.name === 'Metas') {
               iconName = 'target';
+            } else if (route.name === 'Salário') {
+              iconName = 'dollar-sign'; // Using 'dollar-sign' as a placeholder icon for salary
             }
 
             return <Feather name={iconName} size={size} color={color} />;
@@ -37,6 +40,7 @@ const Navigation = ({ name, salary }) => {
         </Tab.Screen>
         <Tab.Screen name="Adicionar Saldo" component={AddBalanceScreen} options={{ headerShown: false }} />
         <Tab.Screen name="Metas" component={GoalsScreen} options={{ headerShown: false }} />
+        <Tab.Screen name="Salário" component={SalaryScreen} options={{ headerShown: false }} />
       </Tab.Navigator>
     </NavigationContainer>
   );
