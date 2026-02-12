@@ -128,7 +128,9 @@ const SalaryScreen = () => {
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>Registro de Salários</Text>
+      <View style={styles.headerContainer}>
+        <Text style={styles.title}>Registro de Salários</Text>
+      </View>
 
       <View style={styles.inputContainer}>
         <Calendar
@@ -155,6 +157,9 @@ const SalaryScreen = () => {
             textDayHeaderFontFamily: 'monospace',
           }}
         />
+        <Text style={styles.totalSalariesText}>
+          Total de Salários: R$ {salaries.reduce((sum, salary) => sum + salary.amount, 0).toFixed(2).replace('.', ',')}
+        </Text>
 
         <TextInput
           style={styles.textInput}
@@ -187,14 +192,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5FCFF',
-    padding: 20,
+    // padding: 20, // Remove padding from container as header will have its own
+  },
+  headerContainer: {
+    paddingVertical: 40, // Increased vertical padding to match height of other screens
+    paddingHorizontal: 30, // Keep horizontal padding
+    backgroundColor: '#4CAF50',
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40,
+    alignItems: 'center',
+    marginBottom: 20, // Add some space below the header
   },
   title: {
-    fontSize: 24,
+    fontSize: 32, // Changed from 24 to 32 to match other screens
     fontWeight: 'bold',
-    textAlign: 'center',
-    marginVertical: 20,
-    color: '#333',
+    // textAlign: 'center', // Centered by parent headerContainer
+    // marginVertical: 20, // Handled by padding in headerContainer
+    color: '#FFFFFF', // Changed to white for better contrast on green background
   },
   inputContainer: {
     marginBottom: 30,
@@ -280,6 +294,14 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 14,
     fontWeight: 'bold',
+  },
+  totalSalariesText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 15,
+    marginBottom: 15,
+    color: '#4CAF50',
   },
 });
 

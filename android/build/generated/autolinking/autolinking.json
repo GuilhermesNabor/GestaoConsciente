@@ -1,26 +1,26 @@
 {
-  "root": "/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente",
-  "reactNativePath": "/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/node_modules/react-native",
+  "root": "/home/nabor/Área de trabalho/GestaoConsciente",
+  "reactNativePath": "/home/nabor/Área de trabalho/GestaoConsciente/node_modules/react-native",
   "reactNativeVersion": "0.82",
   "dependencies": {
     "@react-native-async-storage/async-storage": {
-      "root": "/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/node_modules/@react-native-async-storage/async-storage",
+      "root": "/home/nabor/Área de trabalho/GestaoConsciente/node_modules/@react-native-async-storage/async-storage",
       "name": "@react-native-async-storage/async-storage",
       "platforms": {
         "ios": {
-          "podspecPath": "/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/node_modules/@react-native-async-storage/async-storage/RNCAsyncStorage.podspec",
+          "podspecPath": "/home/nabor/Área de trabalho/GestaoConsciente/node_modules/@react-native-async-storage/async-storage/RNCAsyncStorage.podspec",
           "version": "2.2.0",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/node_modules/@react-native-async-storage/async-storage/android",
+          "sourceDir": "/home/nabor/Área de trabalho/GestaoConsciente/node_modules/@react-native-async-storage/async-storage/android",
           "packageImportPath": "import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;",
           "packageInstance": "new AsyncStoragePackage()",
           "buildTypes": [],
           "libraryName": "rnasyncstorage",
           "componentDescriptors": [],
-          "cmakeListsPath": "/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/node_modules/@react-native-async-storage/async-storage/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/home/nabor/Área de trabalho/GestaoConsciente/node_modules/@react-native-async-storage/async-storage/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -29,17 +29,17 @@
       }
     },
     "react-native-safe-area-context": {
-      "root": "/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/node_modules/react-native-safe-area-context",
+      "root": "/home/nabor/Área de trabalho/GestaoConsciente/node_modules/react-native-safe-area-context",
       "name": "react-native-safe-area-context",
       "platforms": {
         "ios": {
-          "podspecPath": "/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/node_modules/react-native-safe-area-context/react-native-safe-area-context.podspec",
+          "podspecPath": "/home/nabor/Área de trabalho/GestaoConsciente/node_modules/react-native-safe-area-context/react-native-safe-area-context.podspec",
           "version": "5.6.2",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/node_modules/react-native-safe-area-context/android",
+          "sourceDir": "/home/nabor/Área de trabalho/GestaoConsciente/node_modules/react-native-safe-area-context/android",
           "packageImportPath": "import com.th3rdwave.safeareacontext.SafeAreaContextPackage;",
           "packageInstance": "new SafeAreaContextPackage()",
           "buildTypes": [],
@@ -48,7 +48,46 @@
             "RNCSafeAreaProviderComponentDescriptor",
             "RNCSafeAreaViewComponentDescriptor"
           ],
-          "cmakeListsPath": "/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/node_modules/react-native-safe-area-context/android/src/main/jni/CMakeLists.txt",
+          "cmakeListsPath": "/home/nabor/Área de trabalho/GestaoConsciente/node_modules/react-native-safe-area-context/android/src/main/jni/CMakeLists.txt",
+          "cxxModuleCMakeListsModuleName": null,
+          "cxxModuleCMakeListsPath": null,
+          "cxxModuleHeaderName": null,
+          "isPureCxxDependency": false
+        }
+      }
+    },
+    "react-native-screens": {
+      "root": "/home/nabor/Área de trabalho/GestaoConsciente/node_modules/react-native-screens",
+      "name": "react-native-screens",
+      "platforms": {
+        "ios": {
+          "podspecPath": "/home/nabor/Área de trabalho/GestaoConsciente/node_modules/react-native-screens/RNScreens.podspec",
+          "version": "4.19.0",
+          "configurations": [],
+          "scriptPhases": []
+        },
+        "android": {
+          "sourceDir": "/home/nabor/Área de trabalho/GestaoConsciente/node_modules/react-native-screens/android",
+          "packageImportPath": "import com.swmansion.rnscreens.RNScreensPackage;",
+          "packageInstance": "new RNScreensPackage()",
+          "buildTypes": [],
+          "libraryName": "rnscreens",
+          "componentDescriptors": [
+            "RNSFullWindowOverlayComponentDescriptor",
+            "RNSScreenContainerComponentDescriptor",
+            "RNSScreenNavigationContainerComponentDescriptor",
+            "RNSScreenStackHeaderConfigComponentDescriptor",
+            "RNSScreenStackHeaderSubviewComponentDescriptor",
+            "RNSScreenStackComponentDescriptor",
+            "RNSSearchBarComponentDescriptor",
+            "RNSScreenComponentDescriptor",
+            "RNSScreenFooterComponentDescriptor",
+            "RNSScreenContentWrapperComponentDescriptor",
+            "RNSModalScreenComponentDescriptor",
+            "RNSBottomTabsComponentDescriptor",
+            "RNSSafeAreaViewComponentDescriptor"
+          ],
+          "cmakeListsPath": "/home/nabor/Área de trabalho/GestaoConsciente/node_modules/react-native-screens/android/src/main/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -57,17 +96,17 @@
       }
     },
     "react-native-svg": {
-      "root": "/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/node_modules/react-native-svg",
+      "root": "/home/nabor/Área de trabalho/GestaoConsciente/node_modules/react-native-svg",
       "name": "react-native-svg",
       "platforms": {
         "ios": {
-          "podspecPath": "/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/node_modules/react-native-svg/RNSVG.podspec",
+          "podspecPath": "/home/nabor/Área de trabalho/GestaoConsciente/node_modules/react-native-svg/RNSVG.podspec",
           "version": "15.15.1",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/node_modules/react-native-svg/android",
+          "sourceDir": "/home/nabor/Área de trabalho/GestaoConsciente/node_modules/react-native-svg/android",
           "packageImportPath": "import com.horcrux.svg.SvgPackage;",
           "packageInstance": "new SvgPackage()",
           "buildTypes": [],
@@ -103,7 +142,32 @@
             "RNSVGTSpanComponentDescriptor",
             "RNSVGUseComponentDescriptor"
           ],
-          "cmakeListsPath": "/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/node_modules/react-native-svg/android/src/main/jni/CMakeLists.txt",
+          "cmakeListsPath": "/home/nabor/Área de trabalho/GestaoConsciente/node_modules/react-native-svg/android/src/main/jni/CMakeLists.txt",
+          "cxxModuleCMakeListsModuleName": null,
+          "cxxModuleCMakeListsPath": null,
+          "cxxModuleHeaderName": null,
+          "isPureCxxDependency": false
+        }
+      }
+    },
+    "react-native-vector-icons": {
+      "root": "/home/nabor/Área de trabalho/GestaoConsciente/node_modules/react-native-vector-icons",
+      "name": "react-native-vector-icons",
+      "platforms": {
+        "ios": {
+          "podspecPath": "/home/nabor/Área de trabalho/GestaoConsciente/node_modules/react-native-vector-icons/RNVectorIcons.podspec",
+          "version": "10.3.0",
+          "configurations": [],
+          "scriptPhases": []
+        },
+        "android": {
+          "sourceDir": "/home/nabor/Área de trabalho/GestaoConsciente/node_modules/react-native-vector-icons/android",
+          "packageImportPath": "import com.oblador.vectoricons.VectorIconsPackage;",
+          "packageInstance": "new VectorIconsPackage()",
+          "buildTypes": [],
+          "libraryName": "RNVectorIconsSpec",
+          "componentDescriptors": [],
+          "cmakeListsPath": "/home/nabor/Área de trabalho/GestaoConsciente/node_modules/react-native-vector-icons/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -112,23 +176,23 @@
       }
     },
     "react-native-worklets": {
-      "root": "/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/node_modules/react-native-worklets",
+      "root": "/home/nabor/Área de trabalho/GestaoConsciente/node_modules/react-native-worklets",
       "name": "react-native-worklets",
       "platforms": {
         "ios": {
-          "podspecPath": "/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/node_modules/react-native-worklets/RNWorklets.podspec",
+          "podspecPath": "/home/nabor/Área de trabalho/GestaoConsciente/node_modules/react-native-worklets/RNWorklets.podspec",
           "version": "0.7.1",
           "configurations": [],
           "scriptPhases": []
         },
         "android": {
-          "sourceDir": "/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/node_modules/react-native-worklets/android",
+          "sourceDir": "/home/nabor/Área de trabalho/GestaoConsciente/node_modules/react-native-worklets/android",
           "packageImportPath": "import com.swmansion.worklets.WorkletsPackage;",
           "packageInstance": "new WorkletsPackage()",
           "buildTypes": [],
           "libraryName": "rnworklets",
           "componentDescriptors": [],
-          "cmakeListsPath": "/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/node_modules/react-native-worklets/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cmakeListsPath": "/home/nabor/Área de trabalho/GestaoConsciente/node_modules/react-native-worklets/android/build/generated/source/codegen/jni/CMakeLists.txt",
           "cxxModuleCMakeListsModuleName": null,
           "cxxModuleCMakeListsPath": null,
           "cxxModuleHeaderName": null,
@@ -299,7 +363,7 @@
         {
           "name": "--path <path>",
           "description": "Path to the React Native project root.",
-          "default": "/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente"
+          "default": "/home/nabor/Área de trabalho/GestaoConsciente"
         },
         {
           "name": "--platform <string>",
@@ -599,7 +663,7 @@
   "assets": [],
   "project": {
     "ios": {
-      "sourceDir": "/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/ios",
+      "sourceDir": "/home/nabor/Área de trabalho/GestaoConsciente/ios",
       "xcodeProject": {
         "name": "GestaoConsciente.xcodeproj",
         "path": ".",
@@ -608,7 +672,7 @@
       "assets": []
     },
     "android": {
-      "sourceDir": "/home/nabor/Área de trabalho/gestãoConsciente/GestaoConsciente/android",
+      "sourceDir": "/home/nabor/Área de trabalho/GestaoConsciente/android",
       "appName": "app",
       "packageName": "com.gestaoconsciente",
       "applicationId": "com.gestaoconsciente",
